@@ -1,0 +1,30 @@
+<resources xmlns:xliff="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">Popular Movies</string>
+    <string name="title_activity_detail">Details</string>
+
+    <string name="content_authority" translatable="false">com.example.android.popularmovies2</string>
+
+    <string name="trailers_label">Trailers:</string>
+    <string name="reviews_label">Reviews:</string>
+
+    <string name="mark_as_favourite_button">MARK AS\nFAVOURITE</string>
+    <string name="marked_as_favourite">REMOVE FROM\nFAVOURITES</string>
+
+    <string name="action_sort_popular">Show Popular</string>
+    <string name="action_sort_top_rated">Show Top Rated</string>
+    <string name="action_show_favourite">Favorites</string>
+
+    <string name="action_share">Share</string>
+    <string name="action_favourite">Favourite</string>
+
+    <string name="videos_not_found">Videos Not Found</string>
+    <string name="reviews_not_found">Reviews Not Found</string>
+
+    <string name="detail_poster_image_content_descriptor">Detail Poster Image</string>
+    <string name="detail_favourite_image_button_content_descriptor">Detail Favourite Button</string>
+
+    <string name="format_runtime">
+        <xliff:g id="minutes">%1$d</xliff:g> min
+    </string>
+
+</resources>
