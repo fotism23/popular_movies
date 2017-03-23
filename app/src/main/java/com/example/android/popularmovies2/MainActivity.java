@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor>,
         PosterAdapter.PosterAdapterOnClickHandler {
 
+    private static final String CURRENT_SCROLL_POSITION = "recycler_position";
+    private static final String CURRENT_TITLE = "title";
     private final String TAG = MainActivity.class.getSimpleName();
 
     public static final String[] MAIN_PROJECTION = {
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements
     private RecyclerView mRecyclerView;
     private PosterAdapter mPosterAdapter;
     private int mPosition = RecyclerView.NO_POSITION;
+    private GridLayoutManager layoutManager;
 
     private SharedPreferences sharedPreferences;
 
@@ -66,15 +69,19 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.activity_main);
         getSupportActionBar().setElevation(0f);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_poster_wall);
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
+        if (savedInstanceState != null){
+            mPosition = savedInstanceState.getInt(CURRENT_SCROLL_POSITION);
+            setTitle(savedInstanceState.getString(CURRENT_TITLE));
+        }
+
         int numberOfColumns = LayoutUtils.calculateNoOfColumns(this);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, numberOfColumns);
+        layoutManager = new GridLayoutManager(this, numberOfColumns);
 
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
@@ -114,6 +121,13 @@ public class MainActivity extends AppCompatActivity implements
         mRecyclerView.setLayoutManager(layoutManager);
     }
 
+    public void onSaveInstanceState(Bundle savedState) {
+        super.onSaveInstanceState(savedState);
+        mPosition = layoutManager.findFirstVisibleItemPosition();
+        savedState.putInt(CURRENT_SCROLL_POSITION, mPosition);
+        savedState.putString(CURRENT_TITLE, getTitle().toString());
+    }
+
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
@@ -146,9 +160,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
         mPosterAdapter.swapCursor(data);
-
         if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
         mRecyclerView.smoothScrollToPosition(mPosition);
         if (data.getCount() != 0) showMovieDataView();
@@ -176,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements
 
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        mPosition = RecyclerView.NO_POSITION;
         if (id == R.id.action_sort_popular){
             loadPopularMovies();
             return true;

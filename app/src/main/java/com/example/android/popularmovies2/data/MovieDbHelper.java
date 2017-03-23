@@ -10,7 +10,7 @@ import com.example.android.popularmovies2.data.MovieContract.FavouriteEntry;
 public class MovieDbHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "movies.db";
-    private static final int DATABASE_VERSION = 59;
+    private static final int DATABASE_VERSION = 61;
 
     public MovieDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

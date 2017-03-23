@@ -41,8 +41,6 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterAdap
         return new PosterAdapterViewHolder(view);
     }
 
-
-
     @Override
     public void onBindViewHolder(PosterAdapterViewHolder holder, int position) {
         mCursor.moveToPosition(position);
